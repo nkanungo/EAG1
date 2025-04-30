@@ -1,0 +1,17 @@
+Technology and the brain are very closely related these days. Modern computer applications consider the features of human brains and human brains consider the features of technologies.
+
+Like Neurons which are the fundamental units of our brain , the most fundamental unit of a deep neural network is called an artificial neuron, which takes an input, processes it, passes it through an activation function like the Sigmoid, return the activated output
+
+Currently, there are two areas of study of neural networks
+
+· Creation of computer models that faithfully repeat the functioning models of neurons of the real brain
+
+· Creation of computer models that abstractly repeat the functioning models of neurons of the real brain
+
+Nudging promotes rigorous trials, evidence, and testing — so it’s hard to believe every proposal would be found to have worked. In science, experiments frequently throw up unexpected results. Only publishing the results of successful trials would lead to bulging cabinets of failures from which we would never learn. Given that failure is one of our most effective teachers, it would be a huge missed opportunity.
+
+Influenced by the same principle, in this article we will talk about a very basic neural network with Fully Connected layers and how it learns from the errors.
+
+You must be wondering why are we talking about this basic network instead of GPT-n models which are built on the Transformer-based deep learning neural network architecture? But trust me by the time you finish reading this article you would appreciate the effort spent on this.
+
+Most of us know how to train a neural network with MNIST data.

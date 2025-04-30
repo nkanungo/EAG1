@@ -1,0 +1,230 @@
+Train a Basic Neural Network Manually from Scratch | by Nihar Kanungo | Medium
+Open in app
+Sign up
+Sign in
+Write
+Sign up
+Sign in
+Train a Basic Neural Network Manually from Scratch
+Nihar Kanungo
+Follow
+7 min read
+·
+Jun 8, 2021
+--
+Listen
+Share
+Technology and the brain are very closely related these days. Modern computer applications consider the features of human brains and human brains consider the features of technologies.
+Like Neurons which are the fundamental units of our brain , the most fundamental unit of a deep neural network is called an 
+artificial neuron
+, which takes an input, processes it, passes it through an activation function like the Sigmoid, return the activated output
+Currently, there are two areas of study of neural networks
+· Creation of computer models that 
+faithfully
+ repeat the functioning models of neurons of the real brain
+· Creation of computer models that 
+abstractly
+ repeat the functioning models of neurons of the real brain
+Nudging promotes rigorous trials, evidence, and testing — so it’s hard to believe every proposal would be found to have worked. In science, experiments frequently throw up unexpected results. Only publishing the results of successful trials would lead to bulging cabinets of failures from which we would never learn. Given that failure is one of our most effective teachers, it would be a huge missed opportunity.
+Influenced by the same principle, in this article we will talk about a very basic neural network with Fully Connected layers and how it learns from the errors.
+You must be wondering why are we talking about this basic network instead of GPT-n models which are built on the Transformer-based deep learning neural network architecture? But trust me by the time you finish reading this article you would appreciate the effort spent on this.
+Most of us know how to train a neural network with MNIST data.
+Basic NN model designed for MNIST Data
+I am not putting the complete code here as its readily available in most of the places
+( for complete code implementation : 
+https://github.com/nkanungo/EVA6/blob/main/MNIST_99.4_Accuracy_12k%20Parameters/Part-2/MNIST_Pytorch_S4_Relu_BN.ipynb
+)
+MNIST network can be easily trained to achieve a very good accuracy with less number of parameters. Hence many of us call it as Vanilla network. But why only MNIST? we can train neural networks with millions of parameters at ease.
+But have we ever thought of the complexity and pain we would have gone through in the absence of such techniques, packages etc.?
+Here my intention is not only to have fun by training a neural network manually from scratch but to pay my sincere regards to those great minds for making this possible for us. Every scientist, researcher who devoted years in research to bring this live for us.
+With special mention of “Seppo Linnainmaa” who implemented Backpropagation to run on computers as early as 1970
+Train a Basic Neural Network Manually from Scratch
+As discussed above, we will build a very simple neural network with
+Two Input neurons (i1, i2)
+One hidden layer of size 2 (h1, h2)
+Activation function on hidden layers (out_h1, out_h2)
+One output layer (o1, o2)
+Activation Function on Output (out_o1, out_o2)
+Target (t1, t2)
+Error Total (E_Total = E1 + E2)
+Weights (w1, w2 ………, w8)
+Basic Neural Network Diagram
+Forward Propagation
+Both inputs i1 and i2 are connected to hidden units h1 and h2. so, the value which goes to hidden units are a weighted sum of the input neurons.
+h1=w1i1+w2i2
+h2=w3i1+w4i2
+Then we apply nonlinearity to the hidden layer using sigmoid activation function
+out_h1 = σ(h1) = σ(w1i1+w2i2)
+out_h2 = σ(h2) = σ(w3i1+w4i2)
+Now the output of the activated hidden layer goes into the output layer and it’s again a weighted sum of the values of hidden units
+o1 = w5*out_h1 + w6 * out_h2
+o2 = w7*out_h1 + w8 * out_h2
+The value of output layer now goes through activation function again
+out_o1 = σ(o1) = σ(w5*out_h1 + w6 * out_h2)
+out_o2 = σ(o2) = σ(w7*out_h1 + w8 * out_h2)
+this provides the activated output values which are matched against the target values given to the network to learn. The difference between the target value and the output value is called the 
+error
+.
+There are many ways we can penalize the network for not achieving the target value. One of the simple and effective 
+Cost function 
+is MSE (Mean square error) which we will leverage here.
+E1 = 1/2 *(t1 — out_o1) **2
+E2 = 1/2 *(t2 — out_o2) **2
+The total error is
+E_Total = E1 + E2
+Now that we know the error that our network generates, it’s time to ask the network to learn better by reducing the error. We already know how the neural network performs it, of Couse with Backward Propagation of the errors through all the layers. (The learning starts from the input layer)
+So, what gets updated during the training? Yes, you are right, it’s the weights and biases those are connected to the units
+** We will not consider bias for our calculation here for a reason.
+Back Propagation
+The first step while performing back propagation is to take the partial derivative of the error w.r.t the weights connected to it (W5, W6, W7, W8)
+ӘE/Әw5 = (ӘE1+ӘE2)/Әw5 = ӘE1/Әw5
+(E2 can not propagate through w5. Hence ӘE/Әw5 = (ӘE1+ӘE2)/Әw5 = ӘE1/Әw5)
+Using chain rule.
+ӘE1/Әw5= (ӘE1/Әout_o1) * (Әout_o1/Әo1) *(Әo1/Әw5)
+Differentiating each fraction, we get;
+(ӘE1/Әout_o1) = Ә(1/2 *(t1 — out_o1) **2)/Әout_o1 = (out_o1 — t1)
+(Әout_o1/Әo1) = Ә(σ(o1) )/Әo1 = σ(o1)/1- +σ(-o1) = out_o1 * (1-out_o1)
+(Әo1/Әw5) = Ә(w5*out_h1 + w6 * out_h2)/Әw5 = out_h1
+Putting it altogether.
+ӘE/Әw5 = (out_o1 — t1) * out_o1 * (1-out_o1) * out_h1
+Similarly, for w6.
+ӘE/Әw6 = (out_o1 — t1) * out_o1 *(1-out_o1) * out_h2
+Now applying the same logic for w7 & w8 we get
+ӘE/Әw7 = (out_o2 — t2) * out_o2 *(1-out_o2) * out_h1
+ӘE/Әw8 = (out_o2 — t2) * out_o2*(1-out_o2) * out_h2
+Now let’s work on weights w1, w2, w3 and w4. Like the above we will derive equation for one of the weights and apply the same for others.
+ӘE/Әw1 = [(ӘE1/Әout_o1) * (Әout_o1/Әo1) * (Әo1/Әout_h1) * (Әout_h1/Әh1)* (Әh1/Әw1)]+ [(ӘE2/Әout_o2) * (Әout_o2/Әo2) * (Әo2/Әout_h1) * (Әout_h1/Әh1)* (Әh1/Әw1)]
+After differentiating each fraction,
+(ӘE1/Әout_o1 ) = Ә(1/2 *(t1 — out_o1) **2)/Әout_o1 = (out_o1 — t1)
+(Әout_o1/Әo1) = Ә(σ(o1) )/Әo1 = σ(o1)/1+σ(-o1) = out_o1 * (1-out_o1)
+(Әo1/Әout_h1) = Ә(w5*out_h1 + w6 * out_h2)/Әout_h1 = w5
+(Әout_h1/Әh1) = Ә(σ(h1))/Әh1 = σ(h1) *( 1- σ(h1)) = out_h1 * (1-out_h1)
+(Әh1/Әw1) = Ә(w1i1+w2i2)/Әw1 = i1
+(ӘE2/Әout_o2 ) = Ә(1/2 *(t2 — out_o2) **2)/Әout_o2 = (out_o2 — t2)
+(Әout_o2/Әo2) = Ә(σ(o2) )/Әo2 = σ(o2)/1+σ(-o2) = out_o2 * (1-out_o2)
+(Әo2/Әout_h1) = Ә(w7*out_h1 + w8 * out_h2)/Әout_h1 = w7
+(Әout_h1/Әh1) = Ә(σ(h1))/Әh1 = σ(h1) *( 1- σ(h1)) = out_h1 * (1-out_h1)
+(Әh1/Әw1) = Ә(w1i1+w2i2)/Әw1 = i1
+Putting it altogether we get
+ӘE/Әw1 = [(out_o1 — t1) * out_o1 * (1-out_o1) * w5 + (out_o2 — t2) * out_o2 * (1-out_o2) * w7] * out_h1 * (1-out_h1) * i1
+Similarly ;
+ӘE/Әw2 = [(out_o1 — t1) * out_o1 * (1-out_o1) * w5 + (out_o2 — t2) * out_o2 * (1-out_o2) * w7] * out_h1 * (1-out_h1) * i2
+ӘE/Әw3 = [(out_o1 — t1) * out_o1 * (1-out_o1) * w6 + (out_o2 — t2) * out_o2 * (1-out_o2) * w8] * out_h2 * (1-out_h2) * i1
+ӘE/Әw4 = [(out_o1 — t1) * out_o1 * (1-out_o1) * w6 + (out_o2 — t2) * out_o2 * (1-out_o2) * w8] * out_h2 * (1-out_h2) * i2
+It’s clearly evident that backpropagation gets really complex with deep networks. Now as we have all the equations ready, let’s start training.
+For this , I used a simple excel sheet to perform the calculation (snapshot of the training pasted below).
+Complete Training excel sheet download link
+Here i have used fixed values for inputs and initial values for weights are also fixed. However in reality it should be randomly initialized which adds stochasticity to the training.
+I would highly encourage to download the training excel sheet (
+link
+) for details.
+I trained the network with different learning rates (0.1, 0.2, 0.5, 0.8, 1.0, 2.0) for many epochs. Then I plotted loss curve for each network for comparison.
+Loss Chart
+Isn’t it great to see how the network reduces the loss and improves accuracy of prediction over multiple epochs? With this we could able to train a simple neural network manually from scratch and I would encourage everyone to do this at least once.
+Summary
+Training a neural network involves using an optimization algorithm to find a set of weights to best map inputs to outputs.
+The problem is hard, not least because the error surface is non-convex and contains local minima, flat spots, and is highly multidimensional.
+In reality we can not expect to have such a simple neural network to solve our business problem, but the fundamental concept of training a neural network remains the same. This fundamental understanding will help us to build and customize large and complex neural networks which can take the business to next level of success .
+I really enjoyed working through the manual training process and would leave it to the reader for making their own inference on whether it was easy/difficult/complex/ interesting/exciting for them.
+Should you have any questions/comments please feel free to write to me at 
+nihar.kanungo@gmail.com
+.
+I appreciate you taking the time to read this
+Reference
+https://becominghuman.ai/neural-networks-relation-to-human-brain-and-cognition-b45575359f64
+https://medium.com/analytics-vidhya/brief-history-of-neural-networks-44c2bf72eec
+Humans learn from mistakes - so why do we hide our failures?
+This article is part of a series critiquing nudge theory. A few years ago I had the pleasure of listening to the…
+realkm.com
+Neural Network Algorithm
+Manual Training
+Back Propagation
+Loss Function
+Perceptron
+--
+--
+Follow
+Written by 
+Nihar Kanungo
+7 Followers
+·
+4 Following
+Follow
+No responses yet
+Help
+Status
+About
+Careers
+Press
+Blog
+Privacy
+Rules
+Terms
+Text to speech
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
