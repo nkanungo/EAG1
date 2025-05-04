@@ -1,0 +1,3 @@
+"""
+BrowserRAG backend package.
+"""

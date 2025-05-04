@@ -1,0 +1,10 @@
+flask
+flask-cors
+sentence-transformers
+faiss-cpu
+python-dotenv
+requests
+numpy
+fastmcp
+pydantic
+markitdown-mcp

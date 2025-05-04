@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VSA Extension Options</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f9fb; margin: 0; padding: 40px; }
+    .container { max-width: 420px; margin: 0 auto; background: #fff; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.09); padding: 32px 28px; }
+    h2 { margin-top: 0; color: #2e3a4f; }
+    label { font-weight: 500; }
+    input[type=text] { width: 100%; padding: 9px 12px; border-radius: 6px; border: 1px solid #bfc7d1; font-size: 1.04rem; margin-bottom: 16px; }
+    button { background: #2e3a4f; color: #fff; border: none; border-radius: 6px; padding: 9px 22px; font-size: 1.04rem; cursor: pointer; }
+    .status { margin-top: 18px; font-size: 0.97rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Extension Settings</h2>
+    <form id="options-form">
+      <label for="backend-url">Backend API Base URL:</label>
+      <input type="text" id="backend-url" name="backend-url" placeholder="http://127.0.0.1:8000" />
+      <button type="submit">Save</button>
+    </form>
+    <div class="status" id="save-status"></div>
+  </div>
+  <script>
+    const form = document.getElementById('options-form');
+    const backendUrlInput = document.getElementById('backend-url');
+    const saveStatus = document.getElementById('save-status');
+
+    // Load saved URL
+    chrome.storage.sync.get(['backendUrl'], (data) => {
+      if (data.backendUrl) backendUrlInput.value = data.backendUrl;
+    });
+
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const url = backendUrlInput.value.trim();
+      chrome.storage.sync.set({ backendUrl: url }, () => {
+        saveStatus.textContent = 'Saved!';
+        setTimeout(() => saveStatus.textContent = '', 2000);
+      });
+    };
+  </script>
+</body>
+</html>
