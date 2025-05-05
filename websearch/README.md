@@ -67,14 +67,7 @@ python app.py
    - Use the search box to query your indexed content
    - View your indexed pages and manage them through the interface
 
-## Backend API Endpoints
 
-- `POST /log_page`: Index a web page
-- `POST /summary`: Generate a summary of a page
-- `POST /user_query`: Search through indexed content
-- `GET /list_pages`: List all indexed pages
-- `POST /delete_page`: Remove a page from the index
-- `GET /faiss_stats`: Get statistics about the index
 
 ## Technologies Used
 
@@ -82,28 +75,12 @@ python app.py
   - Flask: Web framework
   - FAISS: Vector similarity search
   - Sentence Transformers: Text embeddings
-  - FastMCP: Tool selection and processing
+  - Flask: Tool selection and processing
 
 - **Frontend**:
   - Chrome Extension API
   - HTML/CSS/JavaScript
   - Modern UI with responsive design
 
-## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- FAISS for efficient similarity search
-- Sentence Transformers for text embeddings
-- Flask for the web framework
-- Chrome Extension API for browser integration 
