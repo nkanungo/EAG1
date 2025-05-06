@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Browsing History</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="vsa-popup">
+    <header>
+      <span id="backend-status" title="Backend Status"></span>
+      <span id="vsa-title">My Browsing History</span>
+    </header>
+    <main>
+      <div class="actions">
+        <button id="log-page-btn">Index My Information</button>
+        <button id="summarize-btn">Quick Snapshot</button>
+      </div>
+      <div class="ask-box">
+        <textarea id="ask-input" placeholder="Ask about this page..." rows="1"></textarea>
+        <button id="ask-btn">Search</button>
+      </div>
+      <div id="result-section">
+        <div id="results-label">Output</div>
+        <div id="results"></div>
+      </div>
+      <div id="admin-section">
+        <details>
+          <summary>My Indexed Pages</summary>
+          <ul id="indexed-pages-list"></ul>
+        </details>
+        <button id="show-stats-btn">Show Stats</button>
+        <div id="stats-modal" class="modal hidden">
+          <div class="modal-content">
+            <span id="close-stats">&times;</span>
+            <div id="stats-content"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
